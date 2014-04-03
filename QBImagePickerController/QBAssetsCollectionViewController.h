@@ -20,7 +20,8 @@
 - (void)assetsCollectionViewController:(QBAssetsCollectionViewController *)assetsCollectionViewController didSelectAsset:(ALAsset *)asset;
 - (void)assetsCollectionViewController:(QBAssetsCollectionViewController *)assetsCollectionViewController didDeselectAsset:(ALAsset *)asset;
 - (void)assetsCollectionViewControllerDidFinishSelection:(QBAssetsCollectionViewController *)assetsCollectionViewController;
-
+- (void)assetsCollectionMaximumSelectionExceeded;
+- (void)assetsCollectionMinimumSelectionExceeded;
 @end
 
 @interface QBAssetsCollectionViewController : UICollectionViewController <UICollectionViewDelegateFlowLayout>
