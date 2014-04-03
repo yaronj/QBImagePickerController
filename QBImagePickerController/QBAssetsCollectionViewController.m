@@ -160,23 +160,27 @@
     NSUInteger minimumNumberOfSelection = MAX(1, self.minimumNumberOfSelection);
     BOOL qualifiesMinimumNumberOfSelection = (numberOfSelections >= minimumNumberOfSelection);
     
-    BOOL qualifiesMaximumNumberOfSelection = YES;
-    if (minimumNumberOfSelection <= self.maximumNumberOfSelection) {
-        qualifiesMaximumNumberOfSelection = (numberOfSelections <= self.maximumNumberOfSelection);
-    }
     
+    BOOL qualifiesMaximumNumberOfSelection = [self validateMaximumNumberOfSelections:numberOfSelections];
     return (qualifiesMinimumNumberOfSelection && qualifiesMaximumNumberOfSelection);
 }
 
 - (BOOL)validateMaximumNumberOfSelections:(NSUInteger)numberOfSelections
 {
     NSUInteger minimumNumberOfSelection = MAX(1, self.minimumNumberOfSelection);
-    
+    BOOL validated = YES;
     if (minimumNumberOfSelection <= self.maximumNumberOfSelection) {
-        return (numberOfSelections <= self.maximumNumberOfSelection);
+        
+        validated = (numberOfSelections <= self.maximumNumberOfSelection);
+        if (!validated)
+        {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(assetsCollectionMaximumSelectionExceeded)]) {
+                [self.delegate assetsCollectionMaximumSelectionExceeded];
+            }
+        }
     }
     
-    return YES;
+    return validated;
 }
 
 
